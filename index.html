@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FetalHealth AI - Predictive Care</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#090d16] text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between overflow-x-hidden relative">
+
+    <!-- Decorative background glows -->
+    <div class="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[150px] pointer-events-none"></div>
+
+    <!-- Navigation Header -->
+    <nav class="sticky top-0 z-50 bg-[#090d16]/75 backdrop-blur-md border-b border-slate-800/80 px-6 lg:px-12 py-4 flex items-center justify-between transition-all duration-300">
+        <a href="/" class="flex items-center space-x-2 group">
+            <span class="text-2xl font-outfit font-extrabold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent tracking-wide">
+                FetalHealth<span class="text-indigo-400 font-light">.AI</span>
+            </span>
+        </a>
+        
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
+            <a href="/" class="text-emerald-400 transition-colors duration-300">Home</a>
+            <a href="/home" class="hover:text-slate-200 transition-colors duration-300">Predict</a>
+            <a href="/contact" class="hover:text-slate-200 transition-colors duration-300">Contact</a>
+        </div>
+        
+        <div>
+            <a href="/home" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-medium text-sm text-black transition-all duration-300 bg-emerald-400 rounded-lg hover:bg-emerald-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/20 font-semibold">
+                Start Analysis
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col justify-center items-center px-6 py-12 lg:py-24 relative z-10">
+        <div class="max-w-5xl w-full text-center space-y-8">
+            <!-- Badge -->
+            <div class="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 px-4 py-1.5 rounded-full text-xs font-medium text-emerald-400 tracking-wider uppercase mb-2 animate-fade-in shadow-inner">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>Advanced Machine Learning Diagnostics</span>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-outfit font-extrabold tracking-tight text-white leading-tight">
+                Predict and Monitor <br>
+                <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">
+                    Fetal Well-being
+                </span>
+            </h1>
+
+            <!-- Description -->
+            <p class="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                Utilize highly trained ensemble random forest classifiers to evaluate cardiotocography parameters and classify fetal health conditions with state-of-the-art precision.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+                <a href="/home" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-semibold rounded-xl hover:from-emerald-400 hover:to-teal-300 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-emerald-500/20 text-center">
+                    Analyze Cardiotocography
+                </a>
+                <a href="/contact" class="w-full sm:w-auto px-8 py-4 bg-slate-900/60 text-slate-300 hover:text-white border border-slate-800 rounded-xl hover:bg-slate-800/80 transition-all duration-300 text-center">
+                    Get Support
+                </a>
+            </div>
+
+            <!-- Stats/Features Section -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-12 md:pt-20 text-left max-w-4xl mx-auto">
+                <div class="bg-slate-900/40 backdrop-blur-md border border-slate-850 p-6 rounded-2xl relative overflow-hidden group hover:border-slate-700/60 transition-all duration-300">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-xl pointer-events-none group-hover:bg-emerald-500/10 transition-colors"></div>
+                    <div class="text-3xl font-extrabold text-white mb-1 font-outfit">94.8%</div>
+                    <div class="text-sm font-semibold text-slate-300 mb-1">Validation Accuracy</div>
+                    <p class="text-xs text-slate-500 leading-relaxed">Trained on standardized clinical cardiotocogram recordings.</p>
+                </div>
+
+                <div class="bg-slate-900/40 backdrop-blur-md border border-slate-850 p-6 rounded-2xl relative overflow-hidden group hover:border-slate-700/60 transition-all duration-300">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl pointer-events-none group-hover:bg-indigo-500/10 transition-colors"></div>
+                    <div class="text-3xl font-extrabold text-white mb-1 font-outfit">8 Metrics</div>
+                    <div class="text-sm font-semibold text-slate-300 mb-1">Key Health Indicators</div>
+                    <p class="text-xs text-slate-500 leading-relaxed">Optimized to assess decelerations, variability, and heart rate parameters.</p>
+                </div>
+
+                <div class="bg-slate-900/40 backdrop-blur-md border border-slate-850 p-6 rounded-2xl relative overflow-hidden group hover:border-slate-700/60 transition-all duration-300">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-teal-500/5 rounded-full blur-xl pointer-events-none group-hover:bg-teal-500/10 transition-colors"></div>
+                    <div class="text-3xl font-extrabold text-white mb-1 font-outfit">&lt; 1s</div>
+                    <div class="text-sm font-semibold text-slate-300 mb-1">Instant Insights</div>
+                    <p class="text-xs text-slate-500 leading-relaxed">Runs evaluations instantly to deliver diagnostic classifications.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950/80 border-t border-slate-900/60 py-6 text-center text-xs text-slate-500 relative z-10">
+        <p>&copy; 2026 FetalHealth.AI. All rights reserved. Designed for professional diagnostic support.</p>
+    </footer>
+
+</body>
+</html>

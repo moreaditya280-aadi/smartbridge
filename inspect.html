@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FetalHealth AI - Diagnostic Inspection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#090d16] text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between overflow-x-hidden relative">
+
+    <!-- Decorative background glows -->
+    <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <!-- Navigation Header -->
+    <nav class="sticky top-0 z-50 bg-[#090d16]/75 backdrop-blur-md border-b border-slate-800/80 px-6 lg:px-12 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center space-x-2 group">
+            <span class="text-2xl font-outfit font-extrabold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent tracking-wide">
+                FetalHealth<span class="text-indigo-400 font-light">.AI</span>
+            </span>
+        </a>
+        
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
+            <a href="/" class="hover:text-slate-200 transition-colors duration-300">Home</a>
+            <a href="/home" class="text-emerald-400 transition-colors duration-300">Predict</a>
+            <a href="/contact" class="hover:text-slate-200 transition-colors duration-300">Contact</a>
+        </div>
+        
+        <div>
+            <a href="/home" class="relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-medium text-sm text-black transition-all duration-300 bg-emerald-400 rounded-lg hover:bg-emerald-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/20 font-semibold">
+                Start Analysis
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center py-12 px-6 relative z-10">
+        <div class="w-full max-w-4xl">
+            
+            <!-- Back to Home -->
+            <div class="mb-6">
+                <a href="/" class="text-slate-500 hover:text-emerald-400 text-sm font-medium transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
+            <!-- Page Title -->
+            <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1 class="text-3xl font-outfit font-extrabold text-white tracking-tight">CARDIO TOCOGRAPHY INSPECTION</h1>
+                    <p class="text-slate-400 text-sm mt-1">Input the cardiotocogram (CTG) metrics below to run the classification model.</p>
+                </div>
+                
+                <!-- Quick Demo Buttons -->
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button onclick="fillSample('normal')" class="bg-emerald-950/40 text-emerald-400 hover:bg-emerald-900/60 border border-emerald-800/60 text-xs px-3 py-2 rounded-lg font-medium transition-all duration-200">
+                        ⚡ Load Normal Fetus Sample
+                    </button>
+                    <button onclick="fillSample('pathological')" class="bg-rose-950/40 text-rose-400 hover:bg-rose-900/60 border border-rose-800/60 text-xs px-3 py-2 rounded-lg font-medium transition-all duration-200">
+                        ⚡ Load Pathological Sample
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Alerts -->
+            {% if error %}
+            <div class="bg-red-500/10 border border-red-500/20 text-red-200 p-4 rounded-2xl mb-8 text-sm flex items-start gap-3">
+                <i class="fa-solid fa-circle-exclamation text-red-400 text-lg mt-0.5"></i>
+                <div>
+                    <span class="font-bold">Execution Error:</span> {{ error }}
+                    <p class="text-xs text-red-300/80 mt-1">Please ensure all fields are correctly formatted numeric values.</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Diagnostic Form -->
+            <form action="/home" method="POST" class="bg-slate-900/30 backdrop-blur-md border border-slate-850 p-8 rounded-3xl space-y-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
+                    
+                    <!-- 1. Accelerations -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Accelerations</label>
+                            <span class="text-[10px] text-slate-500">Typical: 0.0 - 0.02</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="accelerations" id="accelerations" required placeholder="0.002" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Number of accelerations per second">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Prolonged Decelerations -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Prolonged Decelerations</label>
+                            <span class="text-[10px] text-slate-500">Typical: 0.0 - 0.005</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="prolongued_decelerations" id="prolongued_decelerations" required placeholder="0.000" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Number of prolonged decelerations per second">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Abnormal Short Term Variability -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Abnormal Short Term Variability (%)</label>
+                            <span class="text-[10px] text-slate-500">Typical: 12.0 - 87.0</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="abnormal_short_term_variability" id="abnormal_short_term_variability" required placeholder="49.0" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Percentage of time with abnormal short term variability">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Percentage of Time with Abnormal Long Term Variability -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Abnormal Long Term Variability (%)</label>
+                            <span class="text-[10px] text-slate-500">Typical: 0.0 - 91.0</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="percentage_of_time_with_abnormal_long_term_variability" id="percentage_of_time_with_abnormal_long_term_variability" required placeholder="9.0" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Percentage of time with abnormal long term variability">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Mean Value of Long Term Variability -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Mean Long Term Variability</label>
+                            <span class="text-[10px] text-slate-500">Typical: 0.0 - 50.7</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="mean_value_of_long_term_variability" id="mean_value_of_long_term_variability" required placeholder="8.1" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Mean value of long term variability">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. Histogram Variance -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Histogram Variance</label>
+                            <span class="text-[10px] text-slate-500">Typical: 0.0 - 269.0</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="histogram_variance" id="histogram_variance" required placeholder="18.8" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Histogram variance of fetal heart rate">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Histogram Median -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Histogram Median</label>
+                            <span class="text-[10px] text-slate-500">Typical: 77.0 - 186.0</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="histogram_median" id="histogram_median" required placeholder="138.0" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Histogram median of fetal heart rate">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Histogram Mode -->
+                    <div class="space-y-2 relative group">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-slate-400 tracking-wider">Histogram Mode</label>
+                            <span class="text-[10px] text-slate-500">Typical: 60.0 - 187.0</span>
+                        </div>
+                        <div class="relative">
+                            <input type="text" name="histogram_mode" id="histogram_mode" required placeholder="137.0" class="w-full bg-slate-950/80 border border-slate-800 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/80 transition-all text-sm text-slate-200">
+                            <div class="absolute right-3 top-3.5 text-slate-650 group-hover:text-slate-400 transition-colors cursor-pointer" title="Histogram mode of fetal heart rate">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pt-4 flex justify-center">
+                    <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-bold px-12 py-4 rounded-xl shadow-lg shadow-emerald-500/10 transition-all duration-300 transform hover:-translate-y-0.5 tracking-wider uppercase text-sm">
+                        Submit Diagnostic Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950/80 border-t border-slate-900/60 py-6 text-center text-xs text-slate-500 relative z-10">
+        <p>&copy; 2026 FetalHealth.AI. All rights reserved. Designed for professional diagnostic support.</p>
+    </footer>
+
+    <!-- Interactive script to populate mock samples -->
+    <script>
+        function fillSample(type) {
+            const samples = {
+                normal: {
+                    accelerations: "0.006",
+                    prolongued_decelerations: "0.0",
+                    abnormal_short_term_variability: "29.0",
+                    percentage_of_time_with_abnormal_long_term_variability: "0.0",
+                    mean_value_of_long_term_variability: "12.1",
+                    histogram_variance: "8.0",
+                    histogram_median: "141.0",
+                    histogram_mode: "143.0"
+                },
+                pathological: {
+                    accelerations: "0.000",
+                    prolongued_decelerations: "0.002",
+                    abnormal_short_term_variability: "78.0",
+                    percentage_of_time_with_abnormal_long_term_variability: "18.0",
+                    mean_value_of_long_term_variability: "2.5",
+                    histogram_variance: "42.0",
+                    histogram_median: "105.0",
+                    histogram_mode: "110.0"
+                }
+            };
+            
+            const data = samples[type];
+            for (const key in data) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = data[key];
+                    // Add a pulse animation to show filled values
+                    element.classList.add('ring-2', 'ring-emerald-400');
+                    setTimeout(() => {
+                        element.classList.remove('ring-2', 'ring-emerald-400');
+                    }, 500);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
